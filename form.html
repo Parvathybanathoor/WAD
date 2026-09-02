@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 30px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 25px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Registration Form</h2>
+
+        <form id="myForm">
+
+            <label>Name:</label>
+            <input type="text" id="name">
+            <div id="nameError" class="error"></div>
+
+            <label>Email:</label>
+            <input type="email" id="email">
+            <div id="emailError" class="error"></div>
+
+            <label>Age:</label>
+            <input type="number" id="age">
+            <div id="ageError" class="error"></div>
+
+            <label>Phone Number:</label>
+            <input type="text" id="phone">
+            <div id="phoneError" class="error"></div>
+
+            <label>Gender:</label>
+            <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <div id="genderError" class="error"></div>
+
+            <label>Nationality:</label>
+            <select id="nationality">
+                <option value="">Select Nationality</option>
+                <option value="Indian">Indian</option>
+                <option value="American">American</option>
+                <option value="British">British</option>
+                <option value="Canadian">Canadian</option>
+                <option value="Other">Other</option>
+            </select>
+            <div id="nationalityError" class="error"></div>
+
+            <label>Occupation:</label>
+            <input type="text" id="occupation">
+            <div id="occupationError" class="error"></div>
+
+            <button type="submit">Submit</button>
+            <button type="button" onclick="clearForm()">Clear</button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Table -->
+    <table id="dataTable" style="display:none;">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Nationality</th>
+                <th>Occupation</th>
+            </tr>
+        </thead>
+
+        <tbody id="tableBody"></tbody>
+
+    </table>
+
+
+    <script>
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            // Get values
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let age = document.getElementById("age").value;
+            let phone = document.getElementById("phone").value.trim();
+            let gender = document.getElementById("gender").value;
+            let nationality = document.getElementById("nationality").value;
+            let occupation = document.getElementById("occupation").value.trim();
+
+            let valid = true;
+
+            // Clear previous errors
+            document.querySelectorAll(".error").forEach(function(error) {
+                error.innerHTML = "";
+            });
+
+            // Name validation
+            if (name === "") {
+                document.getElementById("nameError").innerHTML =
+                    "Name is required";
+                valid = false;
+            }
+
+            // Email validation
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            if (email === "") {
+                document.getElementById("emailError").innerHTML =
+                    "Email is required";
+                valid = false;
+            }
+            else if (!email.match(emailPattern)) {
+                document.getElementById("emailError").innerHTML =
+                    "Enter a valid email";
+                valid = false;
+            }
+
+            // Age validation
+            if (age === "") {
+                document.getElementById("ageError").innerHTML =
+                    "Age is required";
+                valid = false;
+            }
+            else if (age < 1 || age > 100) {
+                document.getElementById("ageError").innerHTML =
+                    "Enter age between 1 and 100";
+                valid = false;
+            }
+
+            // Phone validation
+            let phonePattern = /^[0-9]{10}$/;
+
+            if (phone === "") {
+                document.getElementById("phoneError").innerHTML =
+                    "Phone number is required";
+                valid = false;
+            }
+            else if (!phone.match(phonePattern)) {
+                document.getElementById("phoneError").innerHTML =
+                    "Enter a valid 10-digit phone number";
+                valid = false;
+            }
+
+            // Gender validation
+            if (gender === "") {
+                document.getElementById("genderError").innerHTML =
+                    "Please select gender";
+                valid = false;
+            }
+
+            // Nationality validation
+            if (nationality === "") {
+                document.getElementById("nationalityError").innerHTML =
+                    "Please select nationality";
+                valid = false;
+            }
+
+            // Occupation validation
+            if (occupation === "") {
+                document.getElementById("occupationError").innerHTML =
+                    "Occupation is required";
+                valid = false;
+            }
+
+            // If all details are valid
+            if (valid) {
+
+                // Add data to table
+                let row = document.createElement("tr");
+
+                row.innerHTML =
+                    "<td>" + name + "</td>" +
+                    "<td>" + email + "</td>" +
+                    "<td>" + age + "</td>" +
+                    "<td>" + phone + "</td>" +
+                    "<td>" + gender + "</td>" +
+                    "<td>" + nationality + "</td>" +
+                    "<td>" + occupation + "</td>";
+
+                document.getElementById("tableBody").appendChild(row);
+
+                document.getElementById("dataTable").style.display = "table";
+
+                alert("Form submitted successfully!");
+
+                document.getElementById("myForm").reset();
+            }
+
+        });
+
+
+        // Clear form
+        function clearForm() {
+
+            document.getElementById("myForm").reset();
+
+            document.querySelectorAll(".error").forEach(function(error) {
+                error.innerHTML = "";
+            });
+        }
+
+    </script>
+
+</body>
+</html>
