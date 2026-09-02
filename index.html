@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .container {
+            width: 400px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 8px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 8px 4px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 8px;
+            text-align: left;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Student Information</h2>
+
+        <!-- User Input -->
+        <input type="text" id="username" placeholder="Enter Username">
+
+        <input type="text" id="rollno" placeholder="Enter Roll Number">
+
+        <select id="branch">
+            <option value="">Select Branch</option>
+            <option value="Computer Science and Engineering">CSE</option>
+            <option value="Information Technology">IT</option>
+            <option value="Electronics and Communication">ECE</option>
+            <option value="Electrical and Electronics">EEE</option>
+            <option value="Mechanical Engineering">ME</option>
+            <option value="Civil Engineering">CE</option>
+        </select>
+
+        <br>
+
+        <!-- Buttons -->
+        <button onclick="displayDetails()">Display</button>
+        <button onclick="clearDetails()">Clear</button>
+        <button onclick="editDetails()">Edit</button>
+
+        <!-- Result -->
+        <div id="result"></div>
+
+    </div>
+
+
+    <script>
+
+        // Function to display student details
+        function displayDetails() {
+
+            // JavaScript variables
+            let username = document.getElementById("username").value;
+            let rollNo = document.getElementById("rollno").value;
+            let branch = document.getElementById("branch").value;
+
+            // Check whether input is empty
+            if (username === "" || rollNo === "" || branch === "") {
+                alert("Please enter all student details!");
+                return;
+            }
+
+            // Display details
+            document.getElementById("result").innerHTML =
+                "<h3>Student Details</h3>" +
+                "<p><b>Username:</b> " + username + "</p>" +
+                "<p><b>Roll No:</b> " + rollNo + "</p>" +
+                "<p><b>Branch:</b> " + branch + "</p>";
+
+            document.getElementById("result").style.display = "block";
+        }
+
+
+        // Function to clear all details
+        function clearDetails() {
+
+            document.getElementById("username").value = "";
+            document.getElementById("rollno").value = "";
+            document.getElementById("branch").value = "";
+
+            document.getElementById("result").style.display = "none";
+        }
+
+
+        // Function to edit details
+        function editDetails() {
+
+            document.getElementById("username").focus();
+
+            alert("You can now edit your details.");
+        }
+
+    </script>
+
+</body>
+</html>
